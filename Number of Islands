@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        // Check if grid is empty
+        if(grid.empty() || grid[0].empty() ){
+            return 0;
+        }
+
+        int m = grid.size();
+        int n = grid[0].size();
+        int noOfIslands = 0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                // Increment the counter as land found
+                if(grid[i][j] == '1'){
+                noOfIslands += 1;
+                // Look for neighboring land area
+                dfs(i,j,grid);
+                }
+            }
+        }
+        return noOfIslands;
+    }
+public:
+    void dfs(int i,int j,vector<vector<char>>& grid) {
+        // Check for boundary conditions also return when water or already visited area found
+        if(i < 0 || j < 0 || i >= grid.size() || j >= grid[0].size() || grid[i][j] != '1') {
+            return;
+        }
+        grid[i][j] = '#';
+        // Look for neighbouring land in all four directions
+        dfs(i+1,j,grid);
+        dfs(i-1,j,grid);
+        dfs(i,j+1,grid);
+        dfs(i,j-1,grid);
+        
+    }
+};
