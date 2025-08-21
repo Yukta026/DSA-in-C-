@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        // Sliding window + hashmap approach
+        // left pointer marks the start of window
+        // mp stores the most recent occurrence of character
+        std::unordered_map<char,int> mp;
+        std::vector<char> arr(s.begin(),s.end());
+        int left = 0;
+        
+        int maxLength =0;
+
+        for(int right =0;right<s.size();right++){
+            char c = s[right];
+            // If character already seen shrink the window
+            if(mp.find(c) != mp.end()){
+                left = max(left,mp[c]+1);
+            }
+            mp[c] = right;
+            // Update the maxLength without repeating the char
+            maxLength = max(maxLength,right-left+1);
+        }
+        return maxLength;
+    }
+};
