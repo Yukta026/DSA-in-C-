@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        std::unordered_map<int,int> map;
+        for(int num : nums){
+            map[num] = map[num] +1;
+        }
+
+        auto cmp = [&map] (int a,int b){
+            return map[a] > map[b];
+        };
+
+        priority_queue<int, vector<int>,decltype(cmp) > q(cmp);
+        vector<int> ans;
+        for(const auto& pair:map){
+            int num = pair.first;
+            q.push(num);
+            if(q.size() > k){
+                
+                q.pop();
+            }
+        }
+        while(!q.empty()){
+            ans.push_back(q.top());
+            q.pop();
+        }
+        return ans;
+
+    }
+};
